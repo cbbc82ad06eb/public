@@ -2,7 +2,12 @@
 sudo ufw enable
 
 # disable sshd password authentication
-echo 'PasswordAuthentication no' | sudo tee /etc/ssh/sshd_config.d/NoPasswordAuthentication.conf
+sudo tee /etc/ssh/sshd_config.d/sshd.conf <<eos
+Port 22
+AddressFamily inet
+ListenAddress 0.0.0.0
+PasswordAuthentication no
+eos
 sudo systemctl restart ssh
 
 # disable cups, avahi, dns stub listener
